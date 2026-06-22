@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	m "transformers/transformations"
 )
 
 func ReadAndWrite() {
@@ -25,6 +26,7 @@ func ReadAndWrite() {
 			writer := bufio.NewWriter(writeFile)
 			for reader.Scan() {
 				text := reader.Text()
+				text = m.HexBin(text)
 				writer.WriteString(text);writer.WriteString("\n")
 			}
 			writer.Flush()
