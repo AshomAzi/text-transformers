@@ -10,8 +10,8 @@ I should stop SHOUTING (low)
 
 This is so exciting (up, 2)
 
-This is so exciting (cap, 2)
-
 This is SO EXCITING (low, 2)
 
 This is SO EXCITING (cap, 2)
+
+Punctuation tests are ... kinda boring ,what do you think ?
