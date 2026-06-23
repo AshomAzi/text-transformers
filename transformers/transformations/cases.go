@@ -38,7 +38,32 @@ func CaseN(input string) string {
 				for j := i-1;j >= int(nextNum); j--{
 					newStr[j] = strings.ToUpper(newStr[j])
 					newStr = append(newStr[:i], newStr[i+1:]... )
-				} 
+				}
+			} else {
+				fmt.Println(err)
+				return ""
+		}
+		case "(low,":
+			nextStr := strings.TrimRight(newStr[i+1], ")")
+			numStr, err := strconv.ParseInt(nextStr, 10, 64)
+			if err == nil {
+				for j := i - 1; j >= int(numStr); j-- {
+					newStr[j] = strings.ToLower(newStr[j])
+					newStr = append(newStr[:i], newStr[i+1:]...)
+				}
+			} else {
+				fmt.Println(err)
+				return ""
+			}
+
+		case "(cap,":
+			numStr := strings.TrimRight(newStr[i+1], ")")
+			numDig, err := strconv.ParseInt(numStr, 10, 64)
+			if err == nil {
+				for j := i-1; j >= int(numDig); j-- {
+					newStr[j] = strings.ToUpper(newStr[j][:1])+strings.ToLower(newStr[j][1:])
+					newStr = append(newStr[:i], newStr[i+1:]...)
+				}
 			} else {
 				fmt.Println(err)
 				return ""
@@ -48,4 +73,3 @@ func CaseN(input string) string {
 
 	return strings.Join(newStr, " ")
 }
-

@@ -9,3 +9,9 @@ I should stop SHOUTING (low)
 "Welcome to the Brooklyn bridge (cap)
 
 This is so exciting (up, 2)
+
+This is so exciting (cap, 2)
+
+This is SO EXCITING (low, 2)
+
+This is SO EXCITING (cap, 2)
