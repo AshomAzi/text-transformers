@@ -27,6 +27,8 @@ func ReadAndWrite() {
 			for reader.Scan() {
 				text := reader.Text()
 				text = m.HexBin(text)
+				text = m.Cases(text)
+				text = m.CaseN(text)
 				writer.WriteString(text);writer.WriteString("\n")
 			}
 			writer.Flush()
