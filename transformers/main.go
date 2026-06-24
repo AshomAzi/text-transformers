@@ -29,6 +29,7 @@ func ReadAndWrite() {
 				text = m.HexBin(text)
 				text = m.Cases(text)
 				text = m.CaseN(text)
+				text = m.Puncs(text)
 				text = m.Punc(text)
 				writer.WriteString(text);writer.WriteString("\n")
 			}

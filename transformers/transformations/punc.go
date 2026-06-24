@@ -1,6 +1,7 @@
 package transformations
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -18,6 +19,26 @@ func Punc(input string) string {
 	return strings.Join(newStr, " ")
 }
 
-// func main() {
-// 	fmt.Println(Punc("Punctuation tests are ... kinda boring ,what do you think ?"))
-// }
+func Puncs(input string) string {
+	puncs := ",.:;'!?"
+	newStr := strings.Fields(input)
+	var out []string
+	for _, v := range newStr {
+		if len(v) > 1 && len(out) > 0 {
+			allPunc := true
+			for _, r := range v {
+				if !strings.ContainsRune(puncs, r) {
+					allPunc = false
+					break
+				}
+			}
+			if allPunc {
+				out[len(out)-1] += v
+				continue
+			}
+		}
+		out = append(out, v)
+	}
+
+	return strings.Join(out, " ")
+}
