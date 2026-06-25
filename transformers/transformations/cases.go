@@ -1,75 +1,62 @@
 package transformations
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func Cases(input string) string {
-
-	newStr := strings.Fields(input)
-	for i, v := range newStr {
+func Cases(s string) string {
+	new := strings.Fields(s)
+	for i, v := range new {
 		switch v {
-		case "(up)":
-			newStr[i-1] = strings.ToUpper(newStr[i-1])
-			newStr = append(newStr[:i], newStr[i+1:]...)
-		case "(low)":
-			newStr[i-1] = strings.ToLower(newStr[i-1])
-			newStr = append(newStr[:i], newStr[i+1:]...)
 		case "(cap)":
-			newStr[i-1] = strings.ToUpper(newStr[i-1][:1]) + strings.ToLower(newStr[i-1][1:])
-			newStr = append(newStr[:i], newStr[i+1:]...)
+			new[i-1] = strings.ToUpper(string(new[i-1][0])) + strings.ToLower(string(new[i-1][1:]))
+			new = append(new[:i], new[i+1:]...)
+		case "(up)":
+			new[i-1] = strings.ToUpper(new[i-1])
+			new = append(new[:i], new[i+1:]...)
+		case "(low)":
+			new[i-1] = strings.ToLower(new[i-1])
+			new = append(new[:i], new[i+1:]...)
+		case "(up,":
+			if strings.HasPrefix(new[i+1], ")") && i < 0 {
+				snum := strings.TrimRight(new[i+1], ")")
+				num, _ := strconv.Atoi(snum)
+				for j := 1; j <= num && i-j >= 0; j++ {
+					new[i-j] = strings.ToUpper(new[i-j])
+				}
+				new = append(new[:i], new[i+2:]...)
+			}
 		}
 	}
-
-	return strings.Join(newStr, " ")
+	return strings.Join(new, " ")
 }
 
-func CaseN(input string) string {
-
-	newStr := strings.Fields(input)
-	for i, v := range newStr {
-		switch v {
-		case "(up,":
-			nextStr := strings.TrimRight(newStr[i+1], ")")
-			nextNum, err := strconv.ParseInt(nextStr, 10, 64)
-			if err == nil {
-				for j := i-1;j >= int(nextNum); j--{
-					newStr[j] = strings.ToUpper(newStr[j])
-					newStr = append(newStr[:i], newStr[i+1:]... )
-				}
-			} else {
-				fmt.Println(err)
-				return ""
-		}
-		case "(low,":
-			nextStr := strings.TrimRight(newStr[i+1], ")")
-			numStr, err := strconv.ParseInt(nextStr, 10, 64)
-			if err == nil {
-				for j := i - 1; j >= int(numStr); j-- {
-					newStr[j] = strings.ToLower(newStr[j])
-					newStr = append(newStr[:i], newStr[i+1:]...)
-				}
-			} else {
-				fmt.Println(err)
-				return ""
+func CaseN(s string) string {
+	new := strings.Fields(s)
+	for i := 0; i < len(new); i++ {
+		if new[i] == "(up," && i > 0 {
+			snum := strings.TrimRight(new[i+1], ")")
+			num, _ := strconv.Atoi(snum)
+			for j := 1; j <= num && i-j >= 0; j++ {
+				new[i-j] = strings.ToUpper(new[i-j])
 			}
-
-		case "(cap,":
-			numStr := strings.TrimRight(newStr[i+1], ")")
-			numDig, err := strconv.ParseInt(numStr, 10, 64)
-			if err == nil {
-				for j := i-1; j >= int(numDig); j-- {
-					newStr[j] = strings.ToUpper(newStr[j][:1])+strings.ToLower(newStr[j][1:])
-					newStr = append(newStr[:i], newStr[i+1:]...)
-				}
-			} else {
-				fmt.Println(err)
-				return ""
+			new = append(new[:i], new[i+2:]...)
+		} else if new[i] == "(cap," && i > 0 {
+			snum := strings.TrimRight(new[i+1], ")")
+			num, _ := strconv.Atoi(snum)
+			for j := 1; j <= num && i-j >= 0; j++ {
+				new[i-j] = strings.ToUpper(string(new[i-j])[:1]) + strings.ToLower(string(new[i-j][1:]))
 			}
+			new = append(new[:i], new[i+2:]...)
+		} else if new[i] == "(low," && i > 0 {
+			snum := strings.TrimRight(new[i+1], ")")
+			num, _ := strconv.Atoi(snum)
+			for j := 1; j <= num && i-j >= 0; j++ {
+				new[i-j] = strings.ToLower(new[i-j])
+			}
+			new = append(new[:i], new[i+2:]...)
 		}
 	}
-
-	return strings.Join(newStr, " ")
+	return strings.Join(new, " ")
 }
