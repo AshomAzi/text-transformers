@@ -31,6 +31,7 @@ func ReadAndWrite() {
 				text = m.CaseN(text)
 				text = m.Puncs(text)
 				text = m.Punc(text)
+				text = m.Vowels(text)
 				writer.WriteString(text);writer.WriteString("\n")
 			}
 			writer.Flush()
