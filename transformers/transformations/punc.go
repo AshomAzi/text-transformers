@@ -16,7 +16,13 @@ func Punc(input string) string {
 			}
 		}
 	}
-	return strings.Join(newStr, " ")
+	var result []string
+	for _, v := range newStr {
+		if v != "" {
+			result = append(result, v)
+		}
+	}
+	return strings.Join(result, " ")
 }
 
 func Puncs(input string) string {
