@@ -32,6 +32,7 @@ func ReadAndWrite() {
 				text = m.Puncs(text)
 				text = m.Punc(text)
 				text = m.Vowels(text)
+				text = m.MPunc(text)
 				writer.WriteString(text);writer.WriteString("\n")
 			}
 			writer.Flush()
